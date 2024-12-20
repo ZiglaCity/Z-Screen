@@ -1,6 +1,7 @@
 import tkinter as tk
 import os
-from tkinter import ttk, filedialog
+from tkinter import ttk, filedialog, messagebox
+import pyautogui
 
 
 class ScreenApp:
@@ -49,8 +50,11 @@ class ScreenApp:
     def take_screenshot(self):
         pass
 
-    def capture_screenshot():
-        pass
+    def capture_screenshot(self, save_path):
+        screenshot = pyautogui.screenshot()
+        screenshot.save(save_path)
+        messagebox.showinfo("Success!", f"Screenshot saved as/to {save_path}")
+
 
     def stop_recording(self):
         pass

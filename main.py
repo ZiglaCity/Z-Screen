@@ -52,7 +52,9 @@ class ScreenApp:
             self.root.after(1000, self.minimize_app)
             timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
             save_path = os.path.join(self.save_location.get(), f"screenshot_{timestamp}.png")
-            self.capture_screenshot(save_path=save_path)
+            
+            self.root.after(2000, self.capture_screenshot, save_path)
+
         except Exception as e:
             messagebox.showerror("Error!", f"Failed to take screenshot: {e}")
 

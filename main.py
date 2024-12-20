@@ -15,6 +15,8 @@ class ScreenApp:
         self.max_time = tk.IntVar(value=10)
         self.save_location = tk.StringVar(value=os.path.join(os.getcwd(), "ZiglaCity-ZScreen"))
         
+        if not os.path.exists(self.save_location.get()):
+            os.makedirs(self.save_location.get())
 
 if __name__ == "__main__":
     root = tk.Tk()

@@ -1,6 +1,6 @@
 import tkinter as tk
 import os
-from tkinter import ttk
+from tkinter import ttk, filedialog
 
 
 class ScreenApp:
@@ -41,6 +41,7 @@ class ScreenApp:
 
     
     def browse_save_location(self):
+        directory = filedialog.askdirectory(title="Select Save Location")
         pass
 
     def take_screenshot(self):

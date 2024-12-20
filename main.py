@@ -2,7 +2,7 @@ import tkinter as tk
 import os
 from tkinter import ttk, filedialog, messagebox
 import pyautogui
-
+from datetime import datetime
 
 class ScreenApp:
     global height, width
@@ -48,7 +48,9 @@ class ScreenApp:
         
 
     def take_screenshot(self):
-        pass
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        save_path = os.path.join(self.save_location.get(), f"screenshot_{timestamp}.png")
+        self.capture_screenshot(save_path=save_path)
 
     def capture_screenshot(self, save_path):
         screenshot = pyautogui.screenshot()

@@ -42,7 +42,9 @@ class ScreenApp:
     
     def browse_save_location(self):
         directory = filedialog.askdirectory(title="Select Save Location")
-        pass
+        if directory:
+            self.save_location.set(directory)
+        
 
     def take_screenshot(self):
         pass

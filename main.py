@@ -64,6 +64,9 @@ class ScreenApp:
     def start_recording(self):
         pass
 
+    def minimize_app(self):
+        self.root.iconify()
+
 
 if __name__ == "__main__":
     root = tk.Tk()

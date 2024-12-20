@@ -6,7 +6,7 @@ from datetime import datetime
 
 class ScreenApp:
     global height, width
-    height = 300
+    height = 400
     width = 400
     def __init__(self, root):
         self.root = root
@@ -48,9 +48,13 @@ class ScreenApp:
         
 
     def take_screenshot(self):
-        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        save_path = os.path.join(self.save_location.get(), f"screenshot_{timestamp}.png")
-        self.capture_screenshot(save_path=save_path)
+        try:
+            self.root.after(1000, self.minimize_app)
+            timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+            save_path = os.path.join(self.save_location.get(), f"screenshot_{timestamp}.png")
+            self.capture_screenshot(save_path=save_path)
+        except Exception as e:
+            messagebox.showerror("Error!", f"Failed to take screenshot: {e}")
 
     def capture_screenshot(self, save_path):
         screenshot = pyautogui.screenshot()

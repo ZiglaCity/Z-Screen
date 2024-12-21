@@ -93,7 +93,19 @@ class ScreenApp:
     
     def start_recording_process(self, output_file, max_time):
         print("Recording starting...")
-        pass
+        self.recording_window = tk.Toplevel(self.root)
+        self.recording_window.title("Recording...")
+        self.recording_window.geometry("200x80")
+
+        self.recording_window.attributes("-topmost", True)
+        self.recording_window.protocol("WM_DELETE_WINDOW", self.stop_recording)
+
+        self.timer_label = ttk.Label(self.recording_window, text=f"Time Left: {max_time}s", font=("Arial", 12))
+        self.timer_label.pack()
+
+        self.stop_recording_button = ttk.Button(self.recording_window, text="🛑", command=self.stop_recording)
+        self.stop_recording_button.pack(pady=10)
+        
 
 
 

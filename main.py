@@ -63,15 +63,19 @@ class ScreenApp:
         screenshot.save(save_path)
         messagebox.showinfo("Success!", f"Screenshot saved as/to {save_path}")
 
+    def minimize_app(self):
+        self.root.iconify()
 
+
+    def start_recording(self):
+        self.start_button.config(state="disabled")
+        self.stop_button.config(state="normal")
+        pass
+
+        
     def stop_recording(self):
         pass
 
-    def start_recording(self):
-        pass
-
-    def minimize_app(self):
-        self.root.iconify()
 
 
 if __name__ == "__main__":

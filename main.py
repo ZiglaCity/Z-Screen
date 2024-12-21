@@ -106,8 +106,12 @@ class ScreenApp:
         self.stop_recording_button = ttk.Button(self.recording_window, text="🛑", command=self.stop_recording)
         self.stop_recording_button.pack(pady=10)
         
+        self.time_left = max_time
+        self.update_timer()
 
 
+    def update_timer():
+        pass
 
 if __name__ == "__main__":
     root = tk.Tk()

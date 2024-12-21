@@ -110,8 +110,16 @@ class ScreenApp:
         self.update_timer()
 
 
-    def update_timer():
-        pass
+
+    def update_timer(self):
+        if self.is_recording and self.time_left > 0:
+            self.timer_label.config(text=f"Time Left: {self.time_left}s")
+            self.time_left -= 1
+            self.recording_window.after(1000, self.update_timer)
+        elif self.time_left == 0:
+            self.stop_recording()
+
+
 
 if __name__ == "__main__":
     root = tk.Tk()

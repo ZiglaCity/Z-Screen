@@ -71,6 +71,7 @@ class ScreenApp:
         self.is_recording = True
         self.start_button.config(state="disabled")
         self.stop_button.config(state="normal")
+        self.record_screen()
         pass
 
         
@@ -78,6 +79,20 @@ class ScreenApp:
         self.is_recording = False
         self.stop_button.config(state="disabled")
         self.start_button.config(state="normal")
+
+    
+    def record_screen(self):
+        max_time = self.max_time.get()
+        
+        self.root.after(1000, self.minimize_app)
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        output_file = os.path.join(self.save_location.get(), f"screenrecord_{timestamp}.avi")
+
+        self.root.after(3000, self.start_recording_process, output_file, max_time)
+
+    
+    def start_recording_process(self, output_file, max_time):
+        print("Recording starting...")
         pass
 
 

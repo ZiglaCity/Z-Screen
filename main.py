@@ -50,7 +50,7 @@ class ScreenApp:
     def take_screenshot(self):
         try:
             self.root.after(1000, self.minimize_app)
-            timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+            timestamp = datetime.now().strftime("%Y_%m_%d %H-%M-%S")
             save_path = os.path.join(self.save_location.get(), f"screenshot_{timestamp}.png")
             
             self.root.after(2000, self.capture_screenshot, save_path)
@@ -61,7 +61,7 @@ class ScreenApp:
     def capture_screenshot(self, save_path):
         screenshot = pyautogui.screenshot()
         screenshot.save(save_path)
-        messagebox.showinfo("Success!", f"Screenshot saved as/to {save_path}")
+        messagebox.showinfo("Success!", f"Screenshot saved {save_path}")
 
     def minimize_app(self):
         self.root.iconify()

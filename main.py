@@ -68,12 +68,16 @@ class ScreenApp:
 
 
     def start_recording(self):
+        self.is_recording = True
         self.start_button.config(state="disabled")
         self.stop_button.config(state="normal")
         pass
 
         
     def stop_recording(self):
+        self.is_recording = False
+        self.stop_button.config(state="disabled")
+        self.start_button.config(state="normal")
         pass
 
 

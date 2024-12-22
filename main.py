@@ -122,7 +122,7 @@ class ScreenApp:
     def start_drag(self, event):
         self.drag_data ={'x': event.x, 'y': event.y}
     
-    
+
     def on_drag(self, event):
         old_x = event.x - self.drag_data['x']
         old_y = event.y - self.drag_data['y']
@@ -140,6 +140,11 @@ class ScreenApp:
             self.stop_recording()
 
     
+    def add_mouse_pointer(self, screen, mouse_x, mouse_y):
+        cv2.circle(screen, (mouse_x, mouse_y), 7, (255, 255, 255), -1)
+        return screen
+    
+
     def record_screen_in_background(self, output_file, max_time):
         """Record the screen in the background while updating the timer."""
         with mss.mss() as sct:
@@ -165,6 +170,8 @@ class ScreenApp:
                     """
                     frame = np.array(sct.grab(monitor))
                     frame = cv2.cvtColor(frame, cv2.COLOR_BGRA2BGR)
+                    mouse_x, mouse_y = pyautogui.position() 
+                    frame = self.add_mouse_pointer(frame, mouse_x, mouse_y)
                     out.write(frame) #writes the captured frame to the video file.
                     frame_count += 1 #increase frame counter so that we don't record pass the max time setted
                 

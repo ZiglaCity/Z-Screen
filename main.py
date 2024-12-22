@@ -1,6 +1,9 @@
 import tkinter as tk
-import os
-from tkinter import ttk, filedialog
+from os.path import join, exists
+from os import getcwd, makedirs
+from tkinter.ttk import Entry, Button, Label
+from tkinter import filedialog
+from tkinter.ttk import Combobox
 from tkinter.messagebox import showinfo, showerror
 import pyautogui
 from datetime import datetime
@@ -22,28 +25,28 @@ class ScreenApp:
 
         self.is_recording = False
         self.max_time = tk.IntVar(value=10)
-        self.save_location = tk.StringVar(value=os.path.join(os.getcwd(), "ZiglaCity-ZScreen"))
+        self.save_location = tk.StringVar(value=join(getcwd(), "ZiglaCity-ZScreen"))
         
-        if not os.path.exists(self.save_location.get()):
-            os.makedirs(self.save_location.get())
+        if not exists(self.save_location.get()):
+            makedirs(self.save_location.get())
  
-        ttk.Label(root, text="Max Recording Time (seconds):").pack(pady=10)
+        Label(root, text="Max Recording Time (seconds):").pack(pady=10)
         
-        self.combo = ttk.Combobox(root, values=list(range(5, 61, 5)), textvariable=self.max_time, state="normal")
+        self.combo = Combobox(root, values=list(range(5, 61, 5)), textvariable=self.max_time, state="normal")
         self.combo.pack(pady=5)
         
-        ttk.Label(root, text="Save Location:").pack(pady=10)
-        self.save_location_entry = ttk.Entry(root, textvariable=self.save_location, width=40, state="readonly")
+        Label(root, text="Save Location:").pack(pady=10)
+        self.save_location_entry = Entry(root, textvariable=self.save_location, width=40, state="readonly")
         self.save_location_entry.pack(pady=5)
-        ttk.Button(root, text="Browse", command=self.browse_save_location).pack(pady=5)
+        Button(root, text="Browse", command=self.browse_save_location).pack(pady=5)
         
-        self.start_button = ttk.Button(root, text="Start Recording", command=self.start_recording)
+        self.start_button = Button(root, text="Start Recording", command=self.start_recording)
         self.start_button.pack(pady=5)
         
-        self.stop_button = ttk.Button(root, text="Stop Recording", command=self.stop_recording, state="disabled")
+        self.stop_button = Button(root, text="Stop Recording", command=self.stop_recording, state="disabled")
         self.stop_button.pack(pady=5)
         
-        self.screenshot_button = ttk.Button(root, text="Take Screenshot", command=self.take_screenshot)
+        self.screenshot_button = Button(root, text="Take Screenshot", command=self.take_screenshot)
         self.screenshot_button.pack(pady=5)
 
     
@@ -57,7 +60,7 @@ class ScreenApp:
         try:
             self.root.after(500, self.minimize_app)
             timestamp = datetime.now().strftime("%Y_%m_%d %H-%M-%S")
-            save_path = os.path.join(self.save_location.get(), f"screenshot_{timestamp}.png")
+            save_path = join(self.save_location.get(), f"screenshot_{timestamp}.png")
             
             self.root.after(1000, self.capture_screenshot, save_path)
 
@@ -94,7 +97,7 @@ class ScreenApp:
         
         self.root.after(100, self.minimize_app)
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        output_file = os.path.join(self.save_location.get(), f"screenrecord_{timestamp}.avi")
+        output_file = join(self.save_location.get(), f"screenrecord_{timestamp}.avi")
 
         self.root.after(300, self.start_recording_process, output_file, max_time)
 
@@ -107,10 +110,10 @@ class ScreenApp:
         self.recording_window.attributes("-topmost", True)
         self.recording_window.protocol("WM_DELETE_WINDOW", self.stop_recording)
 
-        self.timer_label = ttk.Label(self.recording_window, text=f"Time Left: {max_time//60}m {max_time%60}s", font=("Arial", 10))
+        self.timer_label = Label(self.recording_window, text=f"Time Left: {max_time//60}m {max_time%60}s", font=("Arial", 10))
         self.timer_label.pack()
 
-        self.stop_recording_button = ttk.Button(self.recording_window, text="🛑", command=self.stop_recording)
+        self.stop_recording_button = Button(self.recording_window, text="🛑", command=self.stop_recording)
         self.stop_recording_button.pack(pady=10)
         
         self.time_left = max_time

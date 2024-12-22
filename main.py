@@ -11,12 +11,13 @@ import threading
 
 class ScreenApp:
     global height, width
-    height = 400
-    width = 400
+    height = 350
+    width = 350
     def __init__(self, root):
         self.root = root
         self.root.title("Z-Screen")
         self.root.geometry(f"{width}x{height}")
+        # self.root.config(bg="#333333")
 
         self.is_recording = False
         self.max_time = tk.IntVar(value=10)
@@ -27,11 +28,11 @@ class ScreenApp:
  
         ttk.Label(root, text="Max Recording Time (seconds):").pack(pady=10)
         
-        self.combo = ttk.Combobox(root, values=list(range(5, 61, 5)), textvariable=self.max_time, state="readonly")
+        self.combo = ttk.Combobox(root, values=list(range(5, 61, 5)), textvariable=self.max_time, state="normal")
         self.combo.pack(pady=5)
         
         ttk.Label(root, text="Save Location:").pack(pady=10)
-        self.save_location_entry = ttk.Entry(root, textvariable=self.save_location, width=40)
+        self.save_location_entry = ttk.Entry(root, textvariable=self.save_location, width=40, state="readonly")
         self.save_location_entry.pack(pady=5)
         ttk.Button(root, text="Browse", command=self.browse_save_location).pack(pady=5)
         
@@ -61,6 +62,7 @@ class ScreenApp:
 
         except Exception as e:
             messagebox.showerror("Error!", f"Failed to take screenshot: {e}")
+
 
     def capture_screenshot(self, save_path):
         screenshot = pyautogui.screenshot()
@@ -99,12 +101,12 @@ class ScreenApp:
     def start_recording_process(self, output_file, max_time):
         self.recording_window = tk.Toplevel(self.root)
         self.recording_window.title("Recording...")
-        self.recording_window.geometry("200x80")
+        self.recording_window.geometry("180x80")
 
         self.recording_window.attributes("-topmost", True)
         self.recording_window.protocol("WM_DELETE_WINDOW", self.stop_recording)
 
-        self.timer_label = ttk.Label(self.recording_window, text=f"Time Left: {max_time}s", font=("Arial", 12))
+        self.timer_label = ttk.Label(self.recording_window, text=f"Time Left: {max_time}s", font=("Arial", 10))
         self.timer_label.pack()
 
         self.stop_recording_button = ttk.Button(self.recording_window, text="🛑", command=self.stop_recording)

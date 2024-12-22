@@ -24,8 +24,7 @@ class ScreenApp:
         
         if not os.path.exists(self.save_location.get()):
             os.makedirs(self.save_location.get())
-
-        
+ 
         ttk.Label(root, text="Max Recording Time (seconds):").pack(pady=10)
         
         self.combo = ttk.Combobox(root, values=list(range(5, 61, 5)), textvariable=self.max_time, state="readonly")
@@ -68,6 +67,7 @@ class ScreenApp:
         screenshot.save(save_path)
         messagebox.showinfo("Success!", f"Screenshot saved {save_path}")
 
+
     def minimize_app(self):
         self.root.iconify()
 
@@ -77,7 +77,6 @@ class ScreenApp:
         self.start_button.config(state="disabled")
         self.stop_button.config(state="normal")
         self.record_screen()
-        pass
 
         
     def stop_recording(self):
@@ -98,7 +97,6 @@ class ScreenApp:
 
     
     def start_recording_process(self, output_file, max_time):
-        print("Recording starting...")
         self.recording_window = tk.Toplevel(self.root)
         self.recording_window.title("Recording...")
         self.recording_window.geometry("200x80")
@@ -123,7 +121,7 @@ class ScreenApp:
 
     def start_drag(self, event):
         self.drag_data ={'x': event.x, 'y': event.y}
-        print(self.drag_data)
+    
     
     def on_drag(self, event):
         old_x = event.x - self.drag_data['x']
@@ -131,7 +129,7 @@ class ScreenApp:
         new_x = old_x + self.recording_window.winfo_x()
         new_y = old_y + self.recording_window.winfo_y()
         self.recording_window.geometry(f"+{new_x}+{new_y}")
-        print(new_x, new_y)
+
 
     def update_timer(self):
         if self.is_recording and self.time_left > 0:
@@ -178,7 +176,6 @@ class ScreenApp:
             except Exception as e:
                 messagebox.showerror("Error", f"Failed to record: {e}")
     
-
 
 
 if __name__ == "__main__":

@@ -6,6 +6,8 @@ from datetime import datetime
 import mss
 import cv2
 import numpy as np
+import threading
+
 
 class ScreenApp:
     global height, width
@@ -92,7 +94,7 @@ class ScreenApp:
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         output_file = os.path.join(self.save_location.get(), f"screenrecord_{timestamp}.avi")
 
-        self.root.after(3000, self.start_recording_process, output_file, max_time)
+        self.root.after(2000, self.start_recording_process, output_file, max_time)
 
     
     def start_recording_process(self, output_file, max_time):
@@ -113,7 +115,8 @@ class ScreenApp:
         self.time_left = max_time
         self.update_timer()
 
-        self.record_screen_in_background(output_file, max_time)
+        threading.Thread(target=self.record_screen_in_background, args=(output_file, max_time), daemon=True).start()
+
 
 
 

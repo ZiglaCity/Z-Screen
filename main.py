@@ -106,7 +106,7 @@ class ScreenApp:
         self.recording_window.attributes("-topmost", True)
         self.recording_window.protocol("WM_DELETE_WINDOW", self.stop_recording)
 
-        self.timer_label = ttk.Label(self.recording_window, text=f"Time Left: {max_time}s", font=("Arial", 10))
+        self.timer_label = ttk.Label(self.recording_window, text=f"Time Left: {max_time//60}m {max_time%60}s", font=("Arial", 10))
         self.timer_label.pack()
 
         self.stop_recording_button = ttk.Button(self.recording_window, text="🛑", command=self.stop_recording)
@@ -135,7 +135,7 @@ class ScreenApp:
 
     def update_timer(self):
         if self.is_recording and self.time_left > 0:
-            self.timer_label.config(text=f"Time Left: {self.time_left}s")
+            self.timer_label.config(text=f"Time Left: {self.time_left//60}m {self.time_left%60}s")
             self.time_left -= 1
             self.recording_window.after(1000, self.update_timer)
         elif self.time_left == 0:

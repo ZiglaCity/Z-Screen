@@ -3,6 +3,9 @@ import os
 from tkinter import ttk, filedialog, messagebox
 import pyautogui
 from datetime import datetime
+import mss
+import cv2
+import numpy as np
 
 class ScreenApp:
     global height, width
@@ -110,7 +113,7 @@ class ScreenApp:
         self.time_left = max_time
         self.update_timer()
 
-        # self.record_screen_in_background(output_file, max_time)
+        self.record_screen_in_background(output_file, max_time)
 
 
 
@@ -124,7 +127,41 @@ class ScreenApp:
 
     
     def record_screen_in_background(self, output_file, max_time):
-        pass
+        """Record the screen in the background while updating the timer."""
+        with mss.mss() as sct:
+            monitor = sct.monitors[1]  # Main monitor
+            width, height = monitor["width"], monitor["height"]
+            
+            # Set up OpenCV video writer
+            """
+            fourcc: The codec for the video file (XVID in this case).
+            VideoWriter object from OpenCV, used to write frames to the video file.
+            20.0: The frame rate for the video (20 frames per second). 
+            """           
+            fourcc = cv2.VideoWriter_fourcc(*"XVID")
+            out = cv2.VideoWriter(output_file, fourcc, 20.0, (width, height))
+
+            frame_count = 0
+            try:
+                while self.is_recording and frame_count < 20 * max_time:  # 20 FPS
+                    """
+                    sct.grab(monitor): Capture the screen.
+                    np.array(): Convert the captured image to a NumPy array.
+                    cv2.cvtColor(): Convert the image from BGRA to BGR format (required by OpenCV).
+                    """
+                    frame = np.array(sct.grab(monitor))
+                    frame = cv2.cvtColor(frame, cv2.COLOR_BGRA2BGR)
+                    out.write(frame) #writes the captured frame to the video file.
+                    frame_count += 1 #increase frame counter so that we don't record pass the max time setted
+                
+                out.release()  #Ensures the video writer releases the file and resources properly.
+                self.stop_recording() 
+                if not self.is_recording:
+                    messagebox.showinfo("Success", f"Recording saved as '{output_file}'")
+                
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to record: {e}")
+    
 
 
 

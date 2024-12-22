@@ -1,12 +1,14 @@
 import tkinter as tk
 import os
-from tkinter import ttk, filedialog, messagebox
+from tkinter import ttk, filedialog
+from tkinter.messagebox import showinfo, showerror
 import pyautogui
 from datetime import datetime
 import mss
 import cv2
 import numpy as np
 from threading import Thread
+
 
 class ScreenApp:
     global height, width
@@ -60,13 +62,13 @@ class ScreenApp:
             self.root.after(1000, self.capture_screenshot, save_path)
 
         except Exception as e:
-            messagebox.showerror("Error!", f"Failed to take screenshot: {e}")
+            showerror("Error!", f"Failed to take screenshot: {e}")
 
 
     def capture_screenshot(self, save_path):
         screenshot = pyautogui.screenshot()
         screenshot.save(save_path)
-        messagebox.showinfo("Success!", f"Screenshot saved {save_path}")
+        showinfo("Success!", f"Screenshot saved {save_path}")
 
 
     def minimize_app(self):
@@ -179,10 +181,10 @@ class ScreenApp:
                 out.release()  #Ensures the video writer releases the file and resources properly.
                 self.stop_recording() 
                 if not self.is_recording:
-                    messagebox.showinfo("Success", f"Recording saved as '{output_file}'")
+                    showinfo("Success", f"Recording saved as '{output_file}'")
                 
             except Exception as e:
-                messagebox.showerror("Error", f"Failed to record: {e}")
+                showerror("Error", f"Failed to record: {e}")
     
 
 

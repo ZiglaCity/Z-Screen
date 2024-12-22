@@ -6,8 +6,7 @@ from datetime import datetime
 import mss
 import cv2
 import numpy as np
-import threading
-
+from threading import Thread
 
 class ScreenApp:
     global height, width
@@ -118,7 +117,7 @@ class ScreenApp:
         self.recording_window.bind("<Button-1>", self.start_drag)
         self.recording_window.bind("<B1-Motion>", self.on_drag)
 
-        threading.Thread(target=self.record_screen_in_background, args=(output_file, max_time), daemon=True).start()
+        Thread(target=self.record_screen_in_background, args=(output_file, max_time), daemon=True).start()
 
 
     def start_drag(self, event):

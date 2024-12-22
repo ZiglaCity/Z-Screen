@@ -116,6 +116,7 @@ class ScreenApp:
         self.update_timer()
 
         self.recording_window.bind("<Button-1>", self.start_drag)
+        self.recording_window.bind("<B1-Motion>", self.on_drag)
 
         threading.Thread(target=self.record_screen_in_background, args=(output_file, max_time), daemon=True).start()
 
@@ -123,6 +124,14 @@ class ScreenApp:
     def start_drag(self, event):
         self.drag_data ={'x': event.x, 'y': event.y}
         print(self.drag_data)
+    
+    def on_drag(self, event):
+        old_x = event.x - self.drag_data['x']
+        old_y = event.y - self.drag_data['y']
+        new_x = old_x + self.recording_window.winfo_x()
+        new_y = old_y + self.recording_window.winfo_y()
+        self.recording_window.geometry(f"+{new_x}+{new_y}")
+        print(new_x, new_y)
 
     def update_timer(self):
         if self.is_recording and self.time_left > 0:

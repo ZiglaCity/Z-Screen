@@ -7,7 +7,7 @@ from tkinter.ttk import Combobox
 from tkinter.messagebox import showinfo, showerror
 from pyautogui import screenshot as take_shot, position
 from datetime import datetime
-import mss
+from mss import mss
 import cv2
 import numpy as np
 from threading import Thread
@@ -153,7 +153,7 @@ class ScreenApp:
 
     def record_screen_in_background(self, output_file, max_time):
         """Record the screen in the background while updating the timer."""
-        with mss.mss() as sct:
+        with mss() as sct:
             monitor = sct.monitors[1]  # Main monitor
             width, height = monitor["width"], monitor["height"]
             

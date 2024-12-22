@@ -1,0 +1,9 @@
+# ignore my testing file
+test.py
+
+# ignore my build and dist folder
+build/
+dist/
+
+# ignore my spec file
+main.spec

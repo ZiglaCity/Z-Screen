@@ -79,6 +79,7 @@ class ScreenApp:
         self.is_recording = False
         self.stop_button.config(state="disabled")
         self.start_button.config(state="normal")
+        self.recording_window.destroy()
 
     
     def record_screen(self):
@@ -109,6 +110,8 @@ class ScreenApp:
         self.time_left = max_time
         self.update_timer()
 
+        # self.record_screen_in_background(output_file, max_time)
+
 
 
     def update_timer(self):
@@ -118,6 +121,10 @@ class ScreenApp:
             self.recording_window.after(1000, self.update_timer)
         elif self.time_left == 0:
             self.stop_recording()
+
+    
+    def record_screen_in_background(self, output_file, max_time):
+        pass
 
 
 

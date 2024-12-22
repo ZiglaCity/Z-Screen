@@ -115,10 +115,14 @@ class ScreenApp:
         self.time_left = max_time
         self.update_timer()
 
+        self.recording_window.bind("<Button-1>", self.start_drag)
+
         threading.Thread(target=self.record_screen_in_background, args=(output_file, max_time), daemon=True).start()
 
 
-
+    def start_drag(self, event):
+        self.drag_data ={'x': event.x, 'y': event.y}
+        print(self.drag_data)
 
     def update_timer(self):
         if self.is_recording and self.time_left > 0:

@@ -54,11 +54,11 @@ class ScreenApp:
 
     def take_screenshot(self):
         try:
-            self.root.after(1000, self.minimize_app)
+            self.root.after(500, self.minimize_app)
             timestamp = datetime.now().strftime("%Y_%m_%d %H-%M-%S")
             save_path = os.path.join(self.save_location.get(), f"screenshot_{timestamp}.png")
             
-            self.root.after(2000, self.capture_screenshot, save_path)
+            self.root.after(1000, self.capture_screenshot, save_path)
 
         except Exception as e:
             messagebox.showerror("Error!", f"Failed to take screenshot: {e}")
@@ -94,7 +94,7 @@ class ScreenApp:
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         output_file = os.path.join(self.save_location.get(), f"screenrecord_{timestamp}.avi")
 
-        self.root.after(2000, self.start_recording_process, output_file, max_time)
+        self.root.after(1000, self.start_recording_process, output_file, max_time)
 
     
     def start_recording_process(self, output_file, max_time):

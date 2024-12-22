@@ -91,11 +91,11 @@ class ScreenApp:
     def record_screen(self):
         max_time = self.max_time.get()
         
-        self.root.after(1000, self.minimize_app)
+        self.root.after(100, self.minimize_app)
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         output_file = os.path.join(self.save_location.get(), f"screenrecord_{timestamp}.avi")
 
-        self.root.after(1000, self.start_recording_process, output_file, max_time)
+        self.root.after(300, self.start_recording_process, output_file, max_time)
 
     
     def start_recording_process(self, output_file, max_time):

@@ -5,7 +5,7 @@ from tkinter.ttk import Entry, Button, Label
 from tkinter import filedialog
 from tkinter.ttk import Combobox
 from tkinter.messagebox import showinfo, showerror
-import pyautogui
+from pyautogui import screenshot as take_shot, position
 from datetime import datetime
 import mss
 import cv2
@@ -69,7 +69,7 @@ class ScreenApp:
 
 
     def capture_screenshot(self, save_path):
-        screenshot = pyautogui.screenshot()
+        screenshot = take_shot()
         screenshot.save(save_path)
         showinfo("Success!", f"Screenshot saved {save_path}")
 
@@ -176,7 +176,7 @@ class ScreenApp:
                     """
                     frame = np.array(sct.grab(monitor))
                     frame = cv2.cvtColor(frame, cv2.COLOR_BGRA2BGR)
-                    mouse_x, mouse_y = pyautogui.position() 
+                    mouse_x, mouse_y = position() 
                     frame = self.add_mouse_pointer(frame, mouse_x, mouse_y)
                     out.write(frame) #writes the captured frame to the video file.
                     frame_count += 1 #increase frame counter so that we don't record pass the max time setted
